@@ -2,22 +2,18 @@
 
 void ShiftArray(int* A, int N, int k) {
 
-	int* M = new int[N];
-	int count = 0;
+	int tmp;
 
-	for (int i = 0; i < N-k; ++i) {
-		M[i] = A[i + k];
-	}
-
-	for (int i = N - k; i < N; ++i) {
-		if (count < k) {
-			M[i] = A[count];
-			++count;
+	for (int i = 0; i < k; ++i) {
+		tmp = A[0];
+		for (int j = 0; j < N-1; ++j) {
+			A[j] = A[j+1];
 		}
+		A[N-1] = tmp;
 	}
 
 	for (int i = 0; i < N; ++i)
-		std::cout << M[i] << ' ';
+		std::cout << A[i] << ' ';
 
 }
 
@@ -47,6 +43,8 @@ int main() {
 	ShiftArray(A, N, k);
 
 	std::cout << std::endl;
+
+	system ("pause");
 
 	return 0;
 
