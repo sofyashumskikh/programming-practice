@@ -159,5 +159,87 @@ T det(T** M, int rows, int columns) {
 	}
 }
 
+double** inv(double** M, int size) {
+
+	double** E = createMatrix<double>(size, size);
+	double koeff;
+	int kol = 0;
+
+	for (int i = 0; i < size; ++i)
+		for (int j = 0; j < size; ++j) {
+			if (i == j)
+				E[i][j] = 1;
+			else
+				E[i][j] = 0;
+		}
+
+	/*
+	print<double>(M, size, size, "");
+	std::cout << std::endl;
+	print<double>(E, size, size, "");
+
+	std::cout << "---------" << std::endl;
+	*/
+
+	while (kol < size) {
+
+		for (int i = kol + 1; i < size; ++i) {
+			if (M[i][kol] != 0 && M[kol][kol] != 0) {
+				koeff = M[i][kol] / M[kol][kol];
+				//result *= koeff;
+				for (int j = kol; j < size; ++j) {
+					M[i][j] -= M[kol][j] * koeff;
+					E[i][j] -= E[kol][j] * koeff;
+				}
+			}
+		}
+
+		++kol;
+
+	}
+
+	/*
+	print<double>(M, size, size, "");
+	std::cout << std::endl;
+	print<double>(E, size, size, "");
+
+	std::cout << "---------" << std::endl;
+	*/
+
+	kol = size-1;
+
+	while (kol >= 0) {
+
+		for (int i = kol-1; i >= 0; --i) {
+			if (M[i][kol] != 0 && M[kol][kol] != 0) {
+				for (int j = kol-1; j >= 0; --j) {
+					koeff = M[i][kol] / M[kol][kol];
+					M[i][kol] -= M[kol][kol] * koeff;
+					for (int k = kol; k >= 0; --k) 
+						E[i][k] -= E[kol][k] * koeff;
+				}
+			}
+		}
+
+		--kol;
+
+	}
+
+	for (int i = 0; i < size; ++i) {
+		for (int j = 0; j < size; ++j)
+			E[i][j] /= M[i][i];
+	}
+
+	/*
+	print<double>(M, size, size, "");
+	std::cout << std::endl;
+	print<double>(E, size, size, "");
+	*/
+
+	deleteMatrix(M, size);
+
+	return E;
+
+}
 
 double** linspace(double first, double last, int n);
