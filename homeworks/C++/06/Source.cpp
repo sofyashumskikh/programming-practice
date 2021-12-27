@@ -3,31 +3,48 @@
 
 int main() {
 
-	double** Z, ** O, ** E, ** v, ** M;
+	double** Z, ** O, ** E, ** v, ** A, **B;
 	try {
-		v = linspace(1, 8, 8);
-		double** t = ones<double>(8, 1);
-		Z = mult(t, v, 8, 1, 8);
-		O = transpose(Z, 8, 8);
-		E = mult(Z, O, 8, 8, 8);
+		//v = linspace(1, 8, 8);
+		//double** t = ones<double>(8, 1);
+		//Z = mult(t, v, 8, 1, 8);
+		//O = transpose(Z, 8, 8);
+		//E = mult(Z, O, 8, 8, 8);
 
 		int N = 4;
 
-		M = createMatrix<double>(N, N);
+		A = createMatrix<double>(N, N);
 
 		for (int i = 0; i < N; ++i)
 			for (int j = 0; j < N; ++j)
-				M[i][j] = rand()%9 + 1;
+				A[i][j] = rand() % 10;
 
-		print(M, 3, 3, "result:\n");
-		double d = det(M, 3, 3);
-		std::cout << d << std::endl;
 
-		deleteMatrix(v, 1);
-		deleteMatrix(t, 8);
-		deleteMatrix(Z, 8);
-		deleteMatrix(O, 8);
-		deleteMatrix(E, 8);
+		print(A, 4, 4, "result:\n");
+		double d = det(A, 4, 4);
+		std::cout << "det = " << d << std::endl;
+
+		std::cout << std::endl;
+
+		B = createMatrix<double>(N, N);
+
+		for (int i = 0; i < N; ++i)
+			for (int j = 0; j < N; ++j)
+				B[i][j] = rand() % 10;
+
+		double** inverse = inv(B, N);
+		std::cout << "inverse matrix = " << std::endl;
+		for (int i = 0; i < N; ++i) {
+			for (int j = 0; j < N; ++j)
+				std::cout << inverse[i][j] << ' ';
+			std::cout << std::endl;
+		}
+
+		//deleteMatrix(v, 1);
+		//deleteMatrix(t, 8);
+		//deleteMatrix(Z, 8);
+		//deleteMatrix(O, 8);
+		//deleteMatrix(E, 8);
 
 		/*Z = zeros(4, 5);
 		O = ones(4, 5);
