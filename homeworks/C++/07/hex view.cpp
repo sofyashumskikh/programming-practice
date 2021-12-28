@@ -25,6 +25,9 @@ std::string from_char(unsigned char ch) {
 	int n = ch;
 	std::string result;
 	int num;
+	
+	if (n == 0)
+		return "00";
 
 	while (n > 0) {
 		num = n % 16;
